@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen md:h-screen flex md:items-center justify-center bg-primary-dark text-primary-light">
         <div class="w-full md:w-1/2">
-            <div class="h-full flex flex-col justify-center items-center pt-6 sm:pt-0 px-4">
+            <div class="h-full flex flex-col md:justify-center items-center pt-6 sm:pt-0 px-4">
                 <div class="">
                     <x-authentication-card-logo />
                 </div>
