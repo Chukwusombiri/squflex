@@ -11,18 +11,18 @@
             @else
                 <span
                     style="line-height: 1; color: #f9fafb; text-transform: uppercase; font-weight: 800; font-size: 1.125rem; letter-spacing: 6px; margin-bottom: 0; padding-bottom: 0;">
-                    FIDELIS
+                    SQUFlex
                 </span>
                 <div
                     style="margin-top: 0; padding-top: 4px; width: 100%; display: inline-flex; gap: 4px; align-items: center;">
                     <span
-                        style="width: 1.4rem; height: 4px;border-radius:2px; background-color: #4f46e5; line-height: 1;"></span>
+                        style="width: 1.4rem; height: 4px;border-radius:2px; background-color: oklch(70.4% 0.14 182.503); line-height: 1;"></span>
                     <span
                         style="font-size: 10px; font-weight: 600; color: #f9fafb; text-transform: uppercase; line-height: 1;">
-                        capital corp
+                        corp
                     </span>
                     <span
-                        style="width: 1.4rem; height: 4px;border-radius:2px; background-color: #4f46e5; line-height: 1;"></span>
+                        style="width: 1.4rem; height: 4px;border-radius:2px; background-color: oklch(70.4% 0.14 182.503); line-height: 1;"></span>
                 </div>
             @endif
         </a>
