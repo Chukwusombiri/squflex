@@ -29,7 +29,7 @@
                         <ul class="list-style-none space-y-2">
                             <li class="futura-book text-sm"><a href="{{route('about')}}">About us</a></li>
                             <li class="futura-book text-sm"><a href="{{route('about').'#team'}}">Our team</a></li>
-                            <li class="futura-book text-sm"><a href="{{route('about').'#reviews'}}">Client review</a></li>
+                            <li class="futura-book text-sm"><a href="{{route('pricing').'#reviews'}}">Client review</a></li>
                             <li class="futura-book text-sm"><a href="{{route('knowledge').'#faqs'}}">FAQs</a></li>
                         </ul>
                     </div>

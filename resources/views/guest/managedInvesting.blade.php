@@ -186,9 +186,9 @@
     </section>
     {{-- team --}}
     <section class="md:min-h-screen py-12 md:py-24 bg-primary-white">
-        <div class="container mx-auto h-full flex flex-wrap items-center px-6">
-            <div data-aos="fade-up" class="w-full lg:w-1/2 mb-7 lg:mb-0 pr-4 h-56 md:h-auto lg:max-h-96">
-                <x-cia />
+        <div class="container mx-auto h-full flex flex-wrap px-6">
+            <div data-aos="fade-up" class="w-full lg:w-1/2 mb-7 lg:mb-0 flex justify-center">
+                <x-investing-svg class="size-9/12"/>
             </div>
             <div data-aos="fade-up" class="w-full lg:w-1/2 px-6 lg:px-10">
                 <div>
@@ -247,12 +247,7 @@
             <div class="flex flex-col justify-around">
                 <div class="w-full flex flex-wrap items-center">
                     <div data-aos="fade-up" class="w-full md:w-1/2 md:px-6 order-2 md:order-1">
-                        <div class="w-full flex justify-center">
-                            <img src="{{ asset('/images/managedInvesting/team.jpg') }}" alt="Team Photo"
-                                class="w-full md:w-auto h-[60vh] object-contain rounded-xl">
-                        </div>
-                        <p class="text-center text-md font-light uppercase mt-4 tracking-widest">Rachel Wilson, ADVISOR</p>
-                        <p class="text-center text-md font-light uppercase mb-2 tracking-widest">HCS® (HEAD OF CUSTOMER SERVICE)</p>
+                        <x-customer-agents-svg class="size-10/12" />
                     </div>
                     <div data-aos="fade-up" class="w-full md:w-1/2 md:px-6 md:order-2 mb-4 mb-0">
                         <div class="flex flex-col justify-center md:pl-10">

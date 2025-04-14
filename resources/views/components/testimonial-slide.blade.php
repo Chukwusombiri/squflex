@@ -116,8 +116,8 @@
                                 </div>
                             </div>
 
-                            <footer class="mt-4 text-sm font-bold text-gray-200 sm:mt-6 flex items-center flex-nowrap gap-3">
-                                <img src="{{ $item->photoUrl }}" alt="" class="w-12 h-12 rounded-full">
+                            <footer class="mt-4 text-sm font-bold text-gray-200 sm:mt-6 flex items-center flex-nowrap gap-3">                                
+                                <x-avatar-svg  class="w-12 h-12 rounded-full" />
                                 <span>&mdash; {{$item->client}} <br> {{$item->occupation}}</span>
                             </footer>
                         </div>
