@@ -134,15 +134,10 @@ Route::middleware([
 
     Route::controller(UserContactController::class)->group(function () {
         Route::get('/update-your-account-details', 'index')->name('get.personal');
-        Route::post('/validate-personal-info', 'savePersonal')->name('info.personal');
-        Route::get('/update-your-bio-details', 'getBio')->name('get.bio');
-        Route::post('/validate-demographic-info', 'saveDemographic')->name('info.demographic');        
+        Route::post('/validate-personal-info', 'savePersonal')->name('info.personal');       
         Route::get('/update-your-contact-details', 'getContact')->name('get.contact');
         Route::post('/validate-contact-info', 'saveContact')->name('info.saveContact');
     });
-    /* Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard'); */
 
     Route::middleware('confirmed.contact')->controller(\App\Http\Controllers\User\UserPagesController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');

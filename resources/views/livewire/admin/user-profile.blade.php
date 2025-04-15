@@ -162,57 +162,6 @@
             </div>
         </div>
         <hr><br><br>
-        {{-- demographic infos --}}
-        <div class="space-y-6 mb-4">
-            <h2 class="futura-medium text-lg">Demographic information</h2>
-            <div class="grid grid-cols-2 items-center justify-center gap-2">
-                <div class="col-span-2 md:col-span-1">
-                    <x-label for="age" value="{{ __('Age') }}" />
-                    <x-input type="number" wire:model="age" class="mt-2 block w-full" />
-                    <x-input-error for="age" class="mt-1" />
-                </div>
-                <div class="col-span-2 md:col-span-1">
-                    <x-label for="email" value="{{ __('Gender') }}" />
-                    <x-select name="gender" id="gender" wire:model="gender" class="mt-1 block w-full">
-                        <option value="">choose gender</option>
-                        <option @if ($user->gender === 'male') {{ 'selected' }} @endif value="male">Male
-                        </option>
-                        <option @if ($user->gender === 'female') {{ 'selected' }} @endif value="female">Female
-                        </option>
-                        <option @if ($user->gender === 'others') {{ 'selected' }} @endif value="others">Others
-                        </option>
-                    </x-select>
-                    <x-input-error for="gender" class="mt-1" />
-                </div>
-            </div>
-            <div class="grid grid-cols-2 items-center justify-center gap-2">
-                <div class="col-span-2 md:col-span-1">
-                    <x-label for="marital_status" value="{{ __('Marital status') }}" />
-                    <x-select wire:model="marital_status" id="marital_status" class="mt-1 block w-full">
-                        <option value="">choose marital status</option>
-                        <option value="single" @if ($user->gender === 'single') {{ 'selected' }} @endif>Single
-                        </option>
-                        <option value="married" @if ($user->gender === 'married') {{ 'selected' }} @endif>Married
-                        </option>
-                        <option value="divorced" @if ($user->gender === 'divorced') {{ 'selected' }} @endif>Divorced
-                        </option>
-                        <option value="others" @if ($user->gender === 'others') {{ 'selected' }} @endif>Others
-                        </option>
-                    </x-select>
-                    <x-input-error for="marital_status" class="mt-1" />
-                </div>
-                <div class="col-span-2 md:col-span-1">
-                    <x-label for="occupation" value="{{ __('Occupation') }}" />
-                    <x-input type="text" wire:model="occupation" class="mt-2 block w-full" />
-                    <x-input-error for="occupation" class="mt-1" />
-                </div>
-            </div>
-            <div class="flex justify-end items-center">
-                <x-action-message on="savedDemographic" />
-                <x-secondary-button class="ml-3" wire:click="saveDemographic">Save</x-secondary-button>
-            </div>
-        </div>
-        <hr><br><br>
         {{-- contact information --}}
         <div class="space-y-6 mb-4">
             <h2 class="futura-medium text-lg">Contact information</h2>
@@ -238,11 +187,6 @@
                     <x-label for="country" value="{{ __('Country of residence') }}" />
                     <x-input type="text" wire:model="country" class="mt-2 block w-full" />
                     <x-input-error for="country" class="mt-1" />
-                </div>
-                <div class="col-span-2 md:col-span-1">
-                    <x-label for="nationality" value="{{ __('Nationality') }}" />
-                    <x-input type="text" wire:model="nationality" class="mt-2 block w-full" />
-                    <x-input-error for="nationality" class="mt-1" />
                 </div>
             </div>
             <div class="flex justify-end items-center">

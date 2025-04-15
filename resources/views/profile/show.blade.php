@@ -26,14 +26,6 @@
                         </div>
         
                         <x-section-border />
-
-                        {{-- demoraphic --}}
-                        <div class="mt-10">
-                            @livewire('user.update-demographic')
-                        </div>
-        
-                        <x-section-border />
-
                         {{-- contact detail --}}
                         <div class="mt-10">
                             @livewire('user.update-contact-detail')

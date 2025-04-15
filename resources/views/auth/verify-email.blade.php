@@ -25,13 +25,7 @@
                 </div>
             </form>
 
-            <div>
-                <a
-                    href="{{ route('profile.show') }}"
-                    class="underline text-sm text-primary-light hover:text-primary-lighter rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600"
-                >
-                    {{ __('Edit Profile') }}</a>
-
+            <div>                
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
 
