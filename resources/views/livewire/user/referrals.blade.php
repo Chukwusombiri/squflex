@@ -6,7 +6,7 @@
             <div class="flex justify-between flex-wrap mt-6">
                 <div class="flex flex-col mb-4 sm:mb-2 md:mb-0">
                     <h6 class="text-lg tracking-wide capitalize">Total referral bonus: ${{ number_format(auth()->user()->downlines()->sum('bonus')) }}</h6>
-                    <h6 class="text-lg tracking-wide capitalize">Current referral bonus: ${{ number_format(auth()->user()->refBonus) }}</h6>
+                    <h6 class="text-lg tracking-wide capitalize">Latest bonus: ${{ number_format(auth()->user()->refBonus) }}</h6>
                 </div>
                 <div class="flex flex-col">
                     <h6 class="text-futura-book mb-2 md:mb-4">Referral link</h6>
@@ -71,10 +71,7 @@
                                 </th>
                                 <th
                                     class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-neutral-900 opacity-70">
-                                    Downline</th>
-                                <th
-                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-neutral-900 opacity-70">
-                                    Group</th>
+                                    Downline</th>                               
                                 <th
                                     class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-neutral-900 opacity-70">
                                     Bonus</th>
@@ -100,13 +97,7 @@
                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                             <p class="mb-0 text-sm font-semibold leading-tight">
                                                 {{ $referral->downlineUsername }}</p>
-                                        </td>
-                                        <td
-                                            class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                            <p class="mb-0 text-sm font-semibold leading-tight">
-                                                Level {{ $referral->level }}
-                                            </p>
-                                        </td>
+                                        </td>                                        
                                         <td
                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                             <p class="mb-0 text-sm font-semibold leading-tight">
@@ -120,7 +111,7 @@
                                         <td
                                             class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                             <span class="font-serif text-sm font-semibold leading-tight text-slate-700">
-                                                @if ($referral->bomus > 0)
+                                                @if ($referral->bonus > 0)
                                                     <span
                                                         class="futura-book text-emerald-400 bg-emerald-50 p-2 rounded-xl">Active</span>
                                                 @else

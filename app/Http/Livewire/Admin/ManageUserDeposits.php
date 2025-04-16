@@ -40,36 +40,54 @@ class ManageUserDeposits extends Component
     }
 
     public function approve($id){        
-        $deposit=Deposit::find($id);
-        if($deposit->isApproved = true){
-            $deposit->update();
-            $this->user->isEarning = true;
-            $this->user->acBal +=  $deposit->amount;           
-            $this->user->acRoi += $deposit->amount;
-            $this->user->plan_id = Plan::where('name',$deposit->plan)->value('id');
-            $this->user->update();
-            Mail::to($this->user->email)->send(new DepositApprovalMail($deposit)); 
-            if ($this->user->upline_id !== null && $this->user->hasDeposited !== true) {                
-                $rewardUp = 10;
-                $rewardDown = 10;                
-            
-                $referrer = Referral::where('downline_id', $this->user->id)->first();
-                if ($referrer !== null) {
-                    $upline = $referrer->user;
-                    if ($upline !== null) {                        
-                        $upline->acRoi += $rewardUp;
-                        $upline->refBonus += $rewardUp;
-                        $upline->save();
-                        $this->user->acRoi = $rewardDown;
-                        $this->user->save();
-                        Mail::to($upline->email)->send(new RewardUplineMail($rewardUp));
-                        Mail::to($this->user->email)->send(new RewardDownlineMail($rewardDown));                        
-                    }
-                }
-            }
-                                    
-            $this->emit('approvedDeposit');
+        $deposit = Deposit::findOrFail($id);
+
+        // Exit early if already approved
+        if ($deposit->isApproved) {
+            return;
         }
+
+        // Mark as approved and save
+        $deposit->isApproved = true;
+        $deposit->save();
+
+
+        $user = User::findOrFail($this->user->id);
+        $user->acBal += $deposit->amount;
+        $user->acRoi += $deposit->amount;
+        $user->isEarning = true;
+
+        // Assign plan if found
+        $planId = Plan::where('name', $deposit->plan)->value('id');
+        if ($planId) {
+            $user->plan_id = $planId;
+        }
+
+         // Send approval mail to user
+         Mail::to($user->email)->send(new DepositApprovalMail($deposit));
+
+         if ($user->upline_id && !$user->hasDeposited) {
+            $reward = ceil($deposit->amount * 0.1);
+
+            $referrer = Referral::where('downline_id', $user->id)->first();
+            if ($referrer && $referrer->user) {
+                $referrer->bonus = $reward;
+                $referrer->save();
+                
+                $upline = $referrer->user;
+                $upline->acRoi += $reward;
+                $upline->refBonus = $reward;
+                $upline->save();
+
+                Mail::to($upline->email)->send(new RewardUplineMail($reward));
+            }
+        }
+
+        // Finalize user state
+        $user->hasDeposited = true;
+        $user->save();
+
+        $this->emit('approvedDeposit');
     }
 
     public function delete($id){        

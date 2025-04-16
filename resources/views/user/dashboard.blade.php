@@ -36,34 +36,7 @@
         </div>
         <!-- row 2 -->
         <div class="mt-10 grid grid-cols-2 gap-4">
-            <!-- card1 -->
-            <div
-                class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
-                <div class="flex-1 p-4">
-                    <div class="flex flex-row -mx-3">
-                        <div class="flex-none w-2/3 max-w-full px-3">
-                            <div>
-                                <h5 class="futura-medium mb-2 text-3xl">${{ number_format(auth()->user()->perMonRoi) }}
-                                </h5>
-                                <p class="sedan-regular-bold mb-0 text-2xl max-w-[70%]">
-                                    Current earnings
-                                </p>
-                            </div>
-                        </div>
-                        <div class="px-3 text-right basis-1/3">
-                            <div
-                                class="inline-block w-14 h-14 flex items-center justify-center rounded-circle bg-primary-dark">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.8" stroke="currentColor" class="w-8 h-8 text-cyan-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- card2 -->
+            <!-- card1 -->                        
             <div
                 class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
                 <div class="flex-1 p-4">
@@ -90,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <!-- card3 -->
+            <!-- card2 -->
             <div
                 class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
                 <div class="p-4">
@@ -117,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <!-- card4 -->
+            <!-- card3 -->
             <div
                 class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
                 <div class="flex-auto p-4">
@@ -138,6 +111,33 @@
                                     stroke-width="1.8" stroke="currentColor" class="w-8 h-8 text-cyan-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- card4 -->
+            <div
+                class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
+                <div class="flex-1 p-4">
+                    <div class="flex flex-row -mx-3">
+                        <div class="flex-none w-2/3 max-w-full px-3">
+                            <div>
+                                <h5 class="futura-medium mb-2 text-3xl">${{ number_format(auth()->user()->perMonInt) }}
+                                </h5>
+                                <p class="sedan-regular-bold mb-0 text-2xl max-w-[70%]">
+                                    Monthly earnings
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-3 text-right basis-1/3">
+                            <div
+                                class="inline-block w-14 h-14 flex items-center justify-center rounded-circle bg-primary-dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.8" stroke="currentColor" class="w-8 h-8 text-cyan-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
                                 </svg>
                             </div>
                         </div>

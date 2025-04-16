@@ -23,7 +23,7 @@
         </div>
         <div class="mb-6">
             <p class="text-xl futura-bold capitalize">Duration: <span
-                    class="ml-2">{{ $currentPlan->duration > 1 ? "$currentPlan->duration days" : "$currentPlan->duration day" }}
+                    class="ml-2">{{ $currentPlan->duration_str }}
                 </span></p>
         </div>
 

@@ -6,9 +6,8 @@
         Funds withdrawal
     </h3>
     <div class="mt-2 md:mt-4">
-        <p class="futura-book text-md md:text-xl mb-px md:mb-2 font-semibold">Portfolio balance: <span>${{ number_format(auth()->user()->acRoi) }}</span></p>
-        <p class="futura-book text-md md:text-xl  mb-px md:mb-2 font-semibold">Current earnings: <span class="">${{ number_format(auth()->user()->perMonRoi) }}</span></p>
-        <p class="futura-book text-md md:text-xl font-semibold">Profit: <span class="">${{ number_format(auth()->user()->acRoi - auth()->user()->acBal) }}</span></p>
+        <p class="futura-book text-3xl mb-px md:mb-2 font-extrabold">Portfolio balance: <span>${{ number_format(auth()->user()->acRoi) }}</span></p>
+        <p class="futura-book text-3xl font-extrabold">Profit: <span class="">${{ number_format(auth()->user()->acRoi - auth()->user()->acBal) }}</span></p>
     </div>
     <div class="mt-2 md:mt-4">
         <x-label for="amount" class="font-semibold" value="{{ __('Amount to withdraw ($)') }}" />

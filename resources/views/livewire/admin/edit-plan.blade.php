@@ -8,7 +8,7 @@
                 <x-input-error for="name" class="mt-1"/>
             </div>
             <div class="col-span-2 md:col-span-1">
-                <x-label for="duration" value="{{__('Duration in days')}}"/>
+                <x-label for="duration" value="{{__('Duration in hours')}}"/>
                 <x-input type="number" wire:model="duration" class="mt-2 block w-full" />
                 <x-input-error for="duration" class="mt-1"/>                       
             </div>                                    

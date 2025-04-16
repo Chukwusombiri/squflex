@@ -11,6 +11,7 @@ use App\Models\Referral;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Notifications\InvestmentApprovalNotification;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
@@ -18,68 +19,84 @@ use LivewireUI\Modal\ModalComponent;
 class AddUserDeposit extends ModalComponent
 {
     public $user;
-    public $amount='';
+    public $amount = '';
     public $wallet = '';
-    public $plan='';
+    public $plan = '';
 
-    protected function rules(){
-        return[
-            'amount' => ['required', 'integer','numeric'],        
-            'plan' => ['required','exists:plans,name'],
-            'wallet' => ['required','exists:wallets,name'],
+    protected function rules()
+    {
+        return [
+            'amount' => ['required', 'integer', 'numeric'],
+            'plan' => ['required', 'exists:plans,name'],
+            'wallet' => ['required', 'exists:wallets,name'],
         ];
-        
     }
 
     public function mount(User $user)
     {
-        $this->user=  $user;
+        $this->user =  $user;
     }
 
-    public function submit(){
+    public function submit()
+    {
         $this->validate();
-               
-        $deposit = new Deposit();
-        $deposit->amount  = $this->amount;
-        $deposit->plan =  $this->plan;        
-        $deposit->wallet = $this->wallet;
-        $deposit->isApproved = true;
-        $deposit->user_id = $this->user->id;
-        $deposit->address = Wallet::where('name',$this->wallet)->value('address');
 
-        if($deposit->save()){                
-            $this->user->acBal += $this->amount;
-            $this->user->acRoi += $this->amount;   
-            $this->user->plan_id = Plan::where('name',$this->plan)->value('id');
-            $this->user->update(); 
-            Mail::to($this->user->email)->send(new DepositApprovalMail($deposit));  
-            if ($this->user->upline_id !== null && $this->user->hasDeposited !== true) {                
-                $rewardUp = 10;
-                $rewardDown = 10;                           
-                $referrer = Referral::where('downline_id', $this->user->id)->first();
-                
-                if ($referrer !== null) {
+        try {
+            $deposit = new Deposit();
+            $deposit->amount  = $this->amount;
+            $deposit->plan =  $this->plan;
+            $deposit->wallet = $this->wallet;
+            $deposit->isApproved = true;
+            $deposit->user_id = $this->user->id;
+            $deposit->address = Wallet::where('name', $this->wallet)->value('address');
+            $deposit->save();
+
+            $user = User::find($this->user);
+            $user->acBal += $this->amount;
+            $user->acRoi += $this->amount;
+            $user->isEarning = true;
+
+            /* find plan */
+            $planId = Plan::where('name', $deposit->plan)->value('id');
+            if ($planId) {
+                $user->plan_id = $planId;
+            }
+            /* send email to user */
+            Mail::to($user->email)->send(new DepositApprovalMail($deposit));
+
+            if ($user->upline_id && !$user->hasDeposited) {
+                $reward = ceil($deposit->amount * 0.1);
+
+                $referrer = Referral::where('downline_id', $user->id)->first();
+                if ($referrer && $referrer->user) {
+                    $referrer->bonus = $reward;
+                    $referrer->save();
+
                     $upline = $referrer->user;
-                    if ($upline !== null) {                        
-                        $upline->acRoi += $rewardUp;
-                        $upline->refBonus += $rewardUp;
-                        $upline->save();
-                        $this->user->acRoi = $rewardDown;
-                        $this->user->save();
-                        Mail::to($upline->email)->send(new RewardUplineMail($rewardUp));
-                        Mail::to($this->user->email)->send(new RewardDownlineMail($rewardDown));                    
-                    }
+                    $upline->acRoi += $reward;
+                    $upline->refBonus = $reward;
+                    $upline->save();
+
+                    Mail::to($upline->email)->send(new RewardUplineMail($reward));
                 }
-            }         
+            }
+
+            // Finalize user state
+            $user->hasDeposited = true;
+            $user->save();
+            
             $this->closeModalWithEvents(['addedDeposit']);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            $this->closeModal();
         }
     }
 
     public function render()
     {
-        return view('livewire.admin.add-user-deposit',[
-            'wallets'=>Wallet::all(),
-            'plans'=>Plan::all(),
+        return view('livewire.admin.add-user-deposit', [
+            'wallets' => Wallet::all(),
+            'plans' => Plan::all(),
         ]);
     }
 }

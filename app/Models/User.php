@@ -33,7 +33,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'referralId',
         'upline_id',
-        'uplineUsername'
+        'uplineUsername',
+        'acBal',
+        'isEarning',
+        'acRoi',
+        'earningCounter',
+        'plan_id',
+        'prev_plan_id'
     ];
 
     /**
@@ -74,15 +80,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function boot()
     {
         parent::boot();
-
+    
         static::creating(function ($user) {
-            $user->referralId = substr(config('app.name'),0,2) . $user->randomId();
+            $rand = \Illuminate\Support\Str::ulid()->toBase32();
+            $user->referralId = substr(config('app.name'), 0, 2) . $rand;
         });
     }
-
-    public function randomId(){
-        return rand(111111111,99999999);
-    }
+    
 
     public function deposits(){
         return $this->hasMany(\App\Models\Deposit::class);

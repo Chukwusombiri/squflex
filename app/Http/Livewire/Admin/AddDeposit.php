@@ -10,6 +10,7 @@ use App\Models\Plan;
 use App\Models\Referral;
 use App\Models\User;
 use App\Models\Wallet;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -33,16 +34,17 @@ class AddDeposit extends Component
     }
 
 
-    public function handleFocus(){
+    public function handleFocus()
+    {
         $this->allUsers = User::all();
     }
 
 
     public function updatedSearch()
     {
-        $this->allUsers = User::where('username','like','%'.$this->search.'%')
-                            ->orWhere('email','like','%'.$this->search.'%')
-                            ->get();
+        $this->allUsers = User::where('username', 'like', '%' . $this->search . '%')
+            ->orWhere('email', 'like', '%' . $this->search . '%')
+            ->get();
     }
 
     public function updatedWallet()
@@ -59,9 +61,10 @@ class AddDeposit extends Component
         }
     }
 
-    public function setUser($id){
+    public function setUser($id)
+    {
         $this->user = $id;
-        $this->search = User::where('id',$id)->value('username');
+        $this->search = User::where('id', $id)->value('username');
         $this->allUsers = [];
     }
 
@@ -69,49 +72,62 @@ class AddDeposit extends Component
     {
         $this->validate();
 
-        $deposit = new Deposit();
-        $deposit->amount  = $this->amount;
-        $deposit->plan =  $this->plan;
-        $deposit->wallet = $this->wallet;
-        $deposit->address = Wallet::where('name', $this->wallet)->value('address') ?? 'none';
-        $deposit->isApproved = true;
-        $deposit->user_id = $this->user;
+        try {
+            $deposit = new Deposit();
+            $deposit->amount  = $this->amount;
+            $deposit->plan =  $this->plan;
+            $deposit->wallet = $this->wallet;
+            $deposit->address = Wallet::where('name', $this->wallet)->value('address') ?? 'none';
+            $deposit->isApproved = true;
+            $deposit->user_id = $this->user;
+            $deposit->save();
 
-        if ($deposit->save()) {
             $user = User::find($this->user);
             $user->acBal += $this->amount;
             $user->acRoi += $this->amount;
             $user->isEarning = true;
-            $user->plan_id = Plan::where('name', $this->plan)->value('id') ?? null;
-            $user->update();
+
+            /* find plan */
+            $planId = Plan::where('name', $deposit->plan)->value('id');
+            if ($planId) {
+                $user->plan_id = $planId;
+            }
+
+            /* send email to user */
             Mail::to($user->email)->send(new DepositApprovalMail($deposit));
 
-            if ($user->upline_id !== null && $user->hasDeposited !== true) {
-                $rewardUp = 10;
-                $rewardDown = 10;
+            /* reward upline */
+            if ($user->upline_id && !$user->hasDeposited) {
+                $reward = ceil($deposit->amount * 0.1);
+
                 $referrer = Referral::where('downline_id', $user->id)->first();
-                if ($referrer !== null) {
+                if ($referrer && $referrer->user) {
+                    $referrer->bonus = $reward;
+                    $referrer->save();
+
                     $upline = $referrer->user;
-                    if ($upline !== null) {                        
-                        $upline->acRoi += $rewardUp;
-                        $upline->refBonus += $rewardUp;
-                        $upline->save();
-                        $user->acRoi = $rewardDown;
-                        $user->save();
-                        Mail::to($upline->email)->send(new RewardUplineMail($rewardUp));
-                        Mail::to($user->email)->send(new RewardDownlineMail($rewardDown));
-                    }
+                    $upline->acRoi += $reward;
+                    $upline->refBonus = $reward;
+                    $upline->save();
+
+                    Mail::to($upline->email)->send(new RewardUplineMail($reward));
                 }
             }
-                    
-        }
 
-        return redirect()->route('admin.deposits')->with('success', 'deposit record was created and approved successfully.');
+            // Finalize user state
+            $user->hasDeposited = true;
+            $user->save();
+
+            return redirect()->route('admin.deposits')->with('success', 'deposit record was created and approved successfully.');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->route('admin.deposits')->with('error', 'Unable to create deposit, contact site developer.');
+        }
     }
 
     public function render()
     {
-        return view('livewire.admin.add-deposit', [            
+        return view('livewire.admin.add-deposit', [
             'wallets' => Wallet::all(),
             'plans' => Plan::all(),
         ]);

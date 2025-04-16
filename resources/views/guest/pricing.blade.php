@@ -43,7 +43,7 @@
                                 <div class="flex items-center mb-4 md:mb-6">
                                     <span class="{{$bgColor}} inline-flex items-center py-2 px-4 rounded-full shadow">
                                         <span class="sedan-regular text-2xl">{{ round($plan->perMonInt,1) }}%</span>
-                                        <span class="ml-2">after {{ $plan->duration }} day{{($plan->duration>1) ? 's' : '' }}</span>
+                                        <span class="ml-2">after {{ $plan->duration_str }}</span>
                                     </span>
                                 </div>
                                 <div class="flex items-center mb-4">

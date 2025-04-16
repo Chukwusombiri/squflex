@@ -351,8 +351,7 @@
                             <div class="flex items-end mb-6">
                                 <span
                                     class="sedan-regular text-4xl font-bold mr-2">{{ round($plan->perMonInt, 1) }}%</span>
-                                <span class="text-xl font-semibold">after {{ $plan->duration }}
-                                    day{{ $plan->duration > 1 ? 's' : '' }}</span>
+                                <span class="text-xl font-semibold">after {{ $plan->duration_str }}</span>
                             </div>
                             <div class="flex items-center mb-4">
                                 <span class="sedan-regular text-2xl font-bold">Minimum:
