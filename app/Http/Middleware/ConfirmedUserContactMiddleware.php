@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class ConfirmedUserContactMiddleware
@@ -24,6 +25,7 @@ class ConfirmedUserContactMiddleware
         }
 
         $user = User::find(auth()->user()->id);
+        
         if($user->last_name==null || $user->first_name==null){
             session()->put('intended_route', $request->url());            
             return redirect()->route('user.get.personal');

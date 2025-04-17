@@ -72,6 +72,14 @@ class UserPagesController extends Controller
         return view('user.depositComplete')->with('deposit',$deposit);
     }
 
+    public function depositCompleteFromBal(){
+        $deposit = session()->pull('deposit');        
+        if(!$deposit){
+            return redirect()->route('user.deposits');
+        }
+        return view('user.depositCompleteFromBal')->with('deposit',$deposit);
+    }
+
     public function removeSession(){
         $deposit = session()->get('deposit');
         if($deposit){

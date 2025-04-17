@@ -50,7 +50,7 @@ class ShowDeposits extends Component
 
         $user = User::findOrFail($deposit->user_id);
         $user->acBal += $deposit->amount;
-        $user->acRoi += $deposit->amount;
+        $user->acRoi += ($deposit->isFromBal ? 0 : $deposit->amount);
         $user->isEarning = true;
 
         // Assign plan if found
@@ -60,6 +60,7 @@ class ShowDeposits extends Component
         }
 
         // Send approval mail to user
+        
         Mail::to($user->email)->send(new DepositApprovalMail($deposit));
 
         // Reward upline if this is their first deposit

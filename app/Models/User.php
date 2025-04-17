@@ -39,7 +39,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'acRoi',
         'earningCounter',
         'plan_id',
-        'prev_plan_id'
+        'prev_plan_id',
+        'perMonRoi'
     ];
 
     /**

@@ -28,14 +28,14 @@ class ZeroPerMonInt extends Command
      */
     public function handle()
     {
-        $users = User::where('perMonInt','>',0)->get();
+        $users = User::where('perMonRoi','>',0)->get();
 
         if($users->isEmpty()){
             return $this->info('There are no records that neeeds zeroing perMonInt');
         }        
 
         foreach ($users as  $user) {
-            $user->perMonInt = 0;
+            $user->perMonRoi = 0;
             $user->save();
         }
 

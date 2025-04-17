@@ -132,31 +132,40 @@ Route::middleware([
     'verified'
     ])->prefix('user')->name('user.')->group(function () {
 
-    Route::controller(UserContactController::class)->group(function () {
-        Route::get('/update-your-account-details', 'index')->name('get.personal');
-        Route::post('/validate-personal-info', 'savePersonal')->name('info.personal');       
-        Route::get('/update-your-contact-details', 'getContact')->name('get.contact');
-        Route::post('/validate-contact-info', 'saveContact')->name('info.saveContact');
-    });
+    Route::get('/account-restriction',function(){
+        abort(423);
+    })->name('restricted');
 
-    Route::middleware('confirmed.contact')->controller(\App\Http\Controllers\User\UserPagesController::class)->group(function () {
-        Route::get('/dashboard', 'index')->name('dashboard');
-        Route::get('/completed-account-update', 'allSet')->name('allSet');
-        Route::get('/pricing-table', 'pricingTable')->name('deposit.pricingTable');
-        Route::get('/make-deposit-transaction/{id}', 'depositCreate')->name('deposit.create');
-        Route::get('/deposit-transaction/successful', 'depositComplete')->name('deposit.complete');
-        Route::get('/deposit-history', 'depositHistory')->name('deposits');
-        Route::get('/deposit/upload-receipt/{id}', 'depositReceipt')->name('deposit.upload');
-        Route::get('/make-withdrawal-transaction', 'withdrawalCreate')->name('withdrawal.create');
-        Route::get('/withdrawal-history', 'withdrawalHistory')->name('withdrawals');
-        Route::get('/funds-transfer-history', 'transferHistory')->name('transfers');
-        Route::get('/transfer-funds-onchain', 'transferCreate')->name('transfer.create');
-        Route::get('/transfer-funds-onchain/complete-wait-approval', 'transferComplete')->name('transfer.complete');
-        Route::get('/transactions-history', 'transactions')->name('transactions');
-        Route::get('/payment-records', 'payments')->name('payments');
-        Route::get('/payment-records/create', 'createPayment')->name('payment.create');
-        Route::get('/payment-records/update/{id}', 'editPayment')->name('payment.edit');
-        Route::post('/remove-session-data', 'removeSession')->name('remove.depositSession');
-        Route::get('/rewards/referral-program', 'viewReferral')->name('referrals');
+    Route::group([
+        'middleware' => ['ban.check']
+    ],function(){
+        Route::controller(UserContactController::class)->group(function () {
+            Route::get('/update-your-account-details', 'index')->name('get.personal');
+            Route::post('/validate-personal-info', 'savePersonal')->name('info.personal');       
+            Route::get('/update-your-contact-details', 'getContact')->name('get.contact');
+            Route::post('/validate-contact-info', 'saveContact')->name('info.saveContact');
+        });
+    
+        Route::middleware('confirmed.contact')->controller(\App\Http\Controllers\User\UserPagesController::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('dashboard');
+            Route::get('/completed-account-update', 'allSet')->name('allSet');
+            Route::get('/pricing-table', 'pricingTable')->name('deposit.pricingTable');
+            Route::get('/make-deposit-transaction/{id}', 'depositCreate')->name('deposit.create');
+            Route::get('/deposit-transaction/successful', 'depositComplete')->name('deposit.complete');
+            Route::get('/deposit-transaction/portfolio-balance-successful', 'depositCompleteFromBal')->name('deposit.completeFromBal');
+            Route::get('/deposit-history', 'depositHistory')->name('deposits');
+            Route::get('/deposit/upload-receipt/{id}', 'depositReceipt')->name('deposit.upload');
+            Route::get('/make-withdrawal-transaction', 'withdrawalCreate')->name('withdrawal.create');
+            Route::get('/withdrawal-history', 'withdrawalHistory')->name('withdrawals');
+            Route::get('/funds-transfer-history', 'transferHistory')->name('transfers');
+            Route::get('/transfer-funds-onchain', 'transferCreate')->name('transfer.create');
+            Route::get('/transfer-funds-onchain/complete-wait-approval', 'transferComplete')->name('transfer.complete');
+            Route::get('/transactions-history', 'transactions')->name('transactions');
+            Route::get('/payment-records', 'payments')->name('payments');
+            Route::get('/payment-records/create', 'createPayment')->name('payment.create');
+            Route::get('/payment-records/update/{id}', 'editPayment')->name('payment.edit');
+            Route::post('/remove-session-data', 'removeSession')->name('remove.depositSession');
+            Route::get('/rewards/referral-program', 'viewReferral')->name('referrals');
+        });
     });
 });

@@ -41,9 +41,9 @@ class UpdateRoi extends Command
             $counter = $user->earningCounter;
             $plan = $user->activePlan;
             $duration = $plan->duration;
-            $planRate = $plan->interest / 100;
-            $hourlyrate = $planRate/$duration;
-            $interest = ($hourlyrate) * $user->acBal;
+            $planRate = $plan->perMonInt / 100;            
+            $hourlyrate = $planRate/$duration;            
+            $interest = ($hourlyrate) * $user->acBal;           
 
             if ($counter < $duration) {
                 $isLastTopUp = $duration-$counter==1;
@@ -51,7 +51,7 @@ class UpdateRoi extends Command
                     'earningCounter' => $counter + 1,
                     'acRoi' => $isLastTopUp ? ceil($user->acRoi + $interest) : round(($user->acRoi + $interest), 2) ,
                     'isEarning' => true,
-                    'perMonInt' =>$isLastTopUp ? ceil($user->perMonInt + $interest) : round(($user->perMonInt + $interest),2) ,
+                    'perMonRoi' => $isLastTopUp ? ceil($user->perMonRoi + $interest) : round(($user->perMonRoi + $interest), 2) ,
                 ]);
             } elseif ($counter === $duration) {
                 $user->update([
