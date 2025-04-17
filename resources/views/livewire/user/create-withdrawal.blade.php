@@ -7,7 +7,8 @@
     </h3>
     <div class="mt-2 md:mt-4">
         <p class="futura-book text-3xl mb-px md:mb-2 font-extrabold">Portfolio balance: <span>${{ number_format(auth()->user()->acRoi) }}</span></p>
-        <p class="futura-book text-3xl font-extrabold">Profit: <span class="">${{ number_format(auth()->user()->acRoi - auth()->user()->acBal) }}</span></p>
+        <p class="text-xl futura-bold text-gray-700 leading-none">Trading session: {{auth()->user()->isEarning ? 'Active' : (auth()->user()->hasDeposited ? 'Inactive' : 'Dormant')}}</p>
+        <span class="text-sm font-light">NB: You won't be able to make a withdrawal during an active trading session.</span>        
     </div>
     <div class="mt-2 md:mt-4">
         <x-label for="amount" class="font-semibold" value="{{ __('Amount to withdraw ($)') }}" />

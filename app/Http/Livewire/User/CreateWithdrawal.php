@@ -44,7 +44,13 @@ class CreateWithdrawal extends Component
     public function withdraw(){
         $this->validate(['amount' => ['required','numeric','integer','min:1','lte:' . auth()->user()->acRoi,],
         'selectedWallet' => ['required','string','exists:user_wallets,name'],
-        'selectedAddress' => ['required','string','exists:user_wallets,address'],]);        
+        'selectedAddress' => ['required','string','exists:user_wallets,address'],]);    
+        
+        if(auth()->user()->isEarning){
+            session()->flash('error','You have an active trading session, you can\'t make a withdrawal now.');
+            $this->reset();
+            return;
+        }
         try {            
             $withdrawal = new Withdrawal();
             $withdrawal->amount = $this->amount;

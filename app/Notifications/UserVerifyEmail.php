@@ -56,10 +56,9 @@ class UserVerifyEmail extends VerifyEmail
         return (new MailMessage)
             ->subject(Lang::get('Verify Email Address'))
             ->greeting(Lang::get('Welcome to '.config('app.name')))
-            ->line(Lang::get('We are delighted to welcome you to our platform- you are where you are supposed to be. '.config('app.name').' offers investment oppurtunities to our clients and esteemed investors whom are seeking ways to improve their portfolio returns.'))
-            ->line(Lang::get('We are a team of dedicated experts and top market insiders who has first-hand information on market moves and strategies, empowered by cutting-edge, next-gen technological infrastructures, we\'ve consistently delivered excellent returns to our esteemed inveestors.'))
-            ->line(Lang::get('To continue, you are required to verify your email address so as to help us protect us and also have access to a personalized service.'))
-            ->line(Lang::get('Please click the button below to verify your email address.'))
+            ->line(Lang::get('We are delighted to welcome you to our platform- you are where you are supposed to be. '.config('app.name').' offers investment oppurtunities to our esteemed investors whom are seeking ways to improve their portfolio returns.'))
+            ->line(Lang::get('Equipped with first-hand information on market moves and strategies, empowered by next-gen technological infrastructures, we\'ve consistently delivered excellent returns to our esteemed inveestors.'))
+            ->line(Lang::get('To continue, you are required to verify your email address so as to help us protect your information and also have access to a personalized service.'))            
             ->action(Lang::get('Verify Email Address'), $url)
             ->line(Lang::get('If you did not create an account, no further action is required.'));
     }

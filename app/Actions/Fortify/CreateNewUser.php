@@ -33,7 +33,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),            
         ]);
 
-        $ref = session()->has('ref');
+        $ref = session()->pull('ref');
         $parent = User::where('referralId','=',$ref)->first();        
         
         if($parent){           

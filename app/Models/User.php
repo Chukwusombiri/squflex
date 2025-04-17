@@ -72,10 +72,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
-    /* public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification()
     {
         $this->notify(new UserVerifyEmail);
-    } */
+    }
 
     protected static function boot()
     {
