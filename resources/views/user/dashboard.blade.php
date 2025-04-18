@@ -124,7 +124,7 @@
                     <div class="flex flex-row -mx-3">
                         <div class="flex-none w-2/3 max-w-full px-3">
                             <div>
-                                <h5 class="futura-medium mb-2 text-3xl">${{ number_format(auth()->user()->perMonInt) }}
+                                <h5 class="futura-medium mb-2 text-3xl">${{ number_format(auth()->user()->perMonRoi) }}
                                 </h5>
                                 <p class="sedan-regular-bold mb-0 text-2xl max-w-[70%]">
                                     Monthly earnings
