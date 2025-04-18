@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <!-- card2 -->
+            <!-- card2 
             <div
                 class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">
                 <div class="p-4">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- card3 -->
             <div
                 class="col-span-2 md:col-span-1 flex flex-col min-w-0 break-words bg-primary-lighter shadow-xl rounded-2xl bg-clip-border">

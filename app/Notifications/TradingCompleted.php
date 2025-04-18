@@ -41,8 +41,12 @@ class TradingCompleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')                    
-                    ->line('Thank you for using our application!');
+                    ->subject('Trading Session Completed')
+                    ->markdown('emails.user.trading-completed',[
+                        'perMonRoi' => '$'.number_format($notifiable->perMonRoi),
+                        'roi' => '$'.number_format($notifiable->acRoi),
+                        'date' => $notifiable->updated_at->format('Y-m-d')
+                    ]);                                      
     }
 
     /**
