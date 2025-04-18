@@ -54,7 +54,7 @@ class ManageUserDeposits extends Component
 
         $user = User::findOrFail($this->user->id);
         $user->acBal += $deposit->amount;
-        $user->acRoi += ($deposit->isFromBal ? 0 : $deposit->amount);
+        $user->acRoi += $deposit->amount;
         $user->isEarning = true;
 
         // Assign plan if found

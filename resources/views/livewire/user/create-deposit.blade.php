@@ -6,6 +6,7 @@
     </h3>
     <div class="mt-5 flex flex-col gap-1">
         <h4 class="text-xl futura-bold tracking-wide">Portfolio Balance: ${{ number_format(auth()->user()->acRoi) }}</h4>
+        @if (!auth()->user()->isEarning)
         <div class="flex items-center">
             <label for="isFundFromBal" class="flex items-center cursor-pointer">
                 <!-- Label -->
@@ -22,6 +23,7 @@
                 
             </label>
         </div>
+        @endif
         
     </div>
     <hr />

@@ -49,7 +49,7 @@ class DepositApprovalMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: $this->deposit->isFromBal ? 'emails.admin.deposit-from-bal-approval' : 'emails.admin.deposit-approval',
+            markdown: 'emails.admin.deposit-approval',
         );
     }
 

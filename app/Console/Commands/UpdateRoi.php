@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Notifications\TradingCompleted;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class UpdateRoi extends Command
 {
@@ -53,6 +55,10 @@ class UpdateRoi extends Command
                     'isEarning' => true,
                     'perMonRoi' => $isLastTopUp ? ceil($user->perMonRoi + $interest) : round(($user->perMonRoi + $interest), 2) ,
                 ]);
+
+                if($isLastTopUp){
+                    $user->notify(new TradingCompleted);
+                }
             } elseif ($counter === $duration) {
                 $user->update([
                     'earningCounter' => 0,
