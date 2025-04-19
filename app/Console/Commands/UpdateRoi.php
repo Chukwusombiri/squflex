@@ -59,7 +59,7 @@ class UpdateRoi extends Command
                 if($isLastTopUp){
                     $user->notify(new TradingCompleted);
                 }
-            } elseif ($counter === $duration) {
+            } elseif ($counter >= $duration) {
                 $user->update([
                     'earningCounter' => 0,
                     'acBal' => 0,
