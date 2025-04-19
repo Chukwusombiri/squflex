@@ -25,28 +25,7 @@
             <p class="text-xl futura-bold capitalize">Duration: <span
                     class="ml-2">{{ $currentPlan->duration_str }}
                 </span></p>
-        </div>
-
-        @if (auth()->user()->plan_id === $currentPlan->id)
-            @php
-                $item = auth()
-                    ->user()
-                    ->deposits()
-                    ->where('plan', $currentPlan->name)
-                    ->orderByDesc('updated_at')
-                    ->first();
-            @endphp
-            <div class="flex items-start mb-4">
-                <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                    </svg>
-                </span>
-                <span class="ml-2 text-white">Deposited {{ $item->wallet }}:$
-                    {{ number_format($item->amount) }}</span>
-            </div>
-        @endif
+        </div>        
 
         <div class="border-0 border-t border-gray-700 pt-3">            
             @if ($currentPlan->features !== null && $currentPlan->features !== '')
@@ -68,7 +47,7 @@
             <div class="w-full mt-6 flex items-center justify-center">
                 <a href="{{ route('user.deposit.create', [$currentPlan->id]) }}"
                     class="px-6 py-2 md:px-8 md:py-3 rounded-xl border border-teal-600 hover:border-teal-500 text-teal-600 hover:text-teal-500">
-                    {{ auth()->user()->plan_id && $currentPlan->id !== auth()->user()->plan_id ? 'upgrade' : 'deposit' }}
+                    {{ ($currentPlan->id !== auth()->user()->plan_id) ? 'upgrade' : 'deposit' }}
                 </a>
             </div>
         </div>

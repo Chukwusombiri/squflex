@@ -25,7 +25,7 @@ class Plan extends Model
 
         $parts = [];
         
-        $parts[] = $days . ' day' . ($days === 1 ? '' : 's');       
+        $parts[] = $days . ' day' . ($days == 1 ? '' : 's');       
 
         if ($remainingHours > 0) {
             $parts[] = $remainingHours . ' hour' . ($remainingHours === 1 ? '' : 's');

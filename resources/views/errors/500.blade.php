@@ -6,7 +6,7 @@
             <p class="text-primary-light mb-6">
                 Oops! Something went wrong on our end. We're working to fix it — please try again later.
             </p>
-            <a href="{{ route('home') }}"
+            <a href="{{ route('guestHome') }}"
                class="inline-block bg-red-500 text-primary-dark font-semibold px-6 py-2 rounded-lg hover:bg-white transition">
                 Back to Home
             </a>

@@ -48,7 +48,8 @@ class UserPagesController extends Controller
     }
 
     public function pricingTable(){
-        $plans = \App\Models\Plan::whereNotIn('id', [auth()->user()->activePlan ? auth()->user()->plan_id : ''])->get();
+        $plans = \App\Models\Plan::all();
+        
         return view('user.pricingTable')->with([
             'plans' => $plans,
         ]);
